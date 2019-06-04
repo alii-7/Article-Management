@@ -7,4 +7,4 @@ step 2: right click on project name -> Manage NuGet Packages -> Updates tabs and
 
 step 3: run the application 
 
-step 4: Login with email: admin@gmail.com  password : Admin?0 or as a guest by guest@gmail.com password: Guest?0
+step 4: Login with email: admin@gmail.com  password : Admin?0 or as a guest by guest@gmail.com password: User?0
