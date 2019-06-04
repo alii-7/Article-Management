@@ -27,10 +27,10 @@ namespace BloggingSystem.Controllers
         public ActionResult Index(string searchString)
         {
 
-            var articles = db.Articles.Include(a => a.Category).OrderBy(a => a.Title);
+            var articles = db.Articles.Include(a => a.Category).OrderBy(a => a.Category.CategoryName);
             if (!String.IsNullOrEmpty(searchString))
             {
-                articles = articles.Where(s => s.Title.Contains(searchString)).OrderBy(a => a.Title);
+                articles = articles.Where(s => s.Category.CategoryName.Contains(searchString)).OrderBy(a => a.Title);
             }
 
             return View("Index", articles.ToList());
