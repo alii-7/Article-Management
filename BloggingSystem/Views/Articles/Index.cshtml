@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BloggingSystem.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Articles</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfPublish)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleBody)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfPublish)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleBody)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) 
+        </td>
+    </tr>
+}
+
+</table>

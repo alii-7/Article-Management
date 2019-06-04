@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BloggingSystem.Models.Article>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                    <input type="submit" value="Search" class="form-control"/>
+                </div>
+            }
+
+            @foreach (var item in Model)
+            {
+                <div class="post-preview">
+                    <a href="~/Articles/details/@item.ID">
+                        <h2 class="post-title">
+                            @item.Title
+                        </h2>
+                        <h3 class="post-subtitle">
+                            @item.Category.CategoryName
+                        </h3>
+                    </a>
+                    <p class="post-meta">
+                        Posted On @item.DateOfPublish.Date
+                    </p>
+                </div>
+                <hr>
+            }
+            </div>
+    </div>
+</div>

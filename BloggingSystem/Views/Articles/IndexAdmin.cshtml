@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BloggingSystem.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Articles</h2>
+
+<p>
+    @Html.ActionLink("Create New Articles", "Create")
+</p>
+    <div class="row">
+@using (Html.BeginForm("Index", "Articles", FormMethod.Post))
+{
+        @Html.TextBox("SearchString", "", new { @class = "form-control" })
+        <input type="submit" value="Search" class="form-control" />
+}
+    </div>
+<hr/>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            Date Of Publish
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleBody)
+        </th>
+        <th>
+            Category
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfPublish)
+            </td>
+            <td>
+                @for (int i = 0; i < 20 && i < item.ArticleBody.Length; i++)
+                {
+                    @item.ArticleBody[i]
+                } ...
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>

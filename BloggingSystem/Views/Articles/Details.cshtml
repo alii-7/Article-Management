@@ -1,0 +1,108 @@
+﻿@model BloggingSystem.Models.Article
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Title</h2>
+
+<h5>
+    @Html.DisplayFor(model => model.DateOfPublish)
+</h5>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                @Model.ArticleBody;
+            </div>
+        </div>
+    </div>
+</article>
+<hr />
+
+<div id="myDIV">
+    @foreach (var item in Model.Comments)
+    {
+        <div class="media">
+            <img style="height:64px;width:64px" class="mr-3" src="~/Content/img/home-bg.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">@item.User.UserName</h5>
+                @item.CommentText
+            </div>
+        </div>
+        <hr />
+    }
+</div>
+
+<div>
+    <form id="formm">
+        @Html.TextBoxFor(model => model.comment, new { id="inputText", @class = "form-control", @placeholder = "Comment" })
+        @Html.HiddenFor(m => m.ID)
+        @Html.Hidden(User.Identity.GetUserName().ToString())
+        <input type="button" value="submit" class="btn btn-block btn-primary" id="btnSubmit" />
+    </form>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to all articles", "Index", "Home")
+</p>
+
+@*<img style="height:64px;width:64px" class="mr-3" src="~/Content/img/home-bg.jpg" alt="Generic placeholder image">
+    <div class="media-body">
+        <h5 class="mt-0">@item.User.UserName</h5>
+        @item.CommentText
+    </div>*@
+
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#btnSubmit').click(function () {
+                var inputData = $('#inputText').val();
+                var data = $('#formm').serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/Articles/Save",
+                    data: data,
+                    success: function (response) {
+                        alert('you are done');
+                    }
+                })
+
+            var div = document.createElement("div");
+            div.id = "firstDiv"
+            div.classList.add("media");
+
+            var oImg = document.createElement("img");
+            oImg.classList.add("mr-3")
+            oImg.src = "/Content/img/home-bg.jpg";
+            oImg.setAttribute('alt', 'Generic placeholder image');
+            oImg.setAttribute('height', '64px');
+            oImg.setAttribute('width', '64px');
+
+            var div2 = document.createElement("div");
+            div2.classList.add("media-body");
+
+            var h5 = document.createElement("h5");
+            h5.classList.add("mt-0");
+            var text = "@User.Identity.GetUserName()";
+            h5.innerText = text;
+
+            div2.appendChild(h5);
+            div2.innerHTML += inputData;
+
+            div.appendChild(oImg);
+            div.appendChild(div2);
+            
+            document.getElementById("myDIV").appendChild(div);
+            })
+        })
+    </script>
+}
